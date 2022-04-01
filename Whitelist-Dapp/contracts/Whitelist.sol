@@ -23,4 +23,8 @@ contract Whitelist {
         whitelistedAddresses[msg.sender] = true;
         numOfWhitelistedAddresses += 1;
     }
+
+    function getCurrentUserAddress() public view returns (address) {
+        return msg.sender;
+    }
 }

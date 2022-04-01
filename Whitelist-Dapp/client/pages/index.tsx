@@ -86,7 +86,7 @@ const Home: NextPage = () => {
         provider
       )
       console.log({ whitelistContract })
-      const { address } = whitelistContract
+      const address = await whitelistContract.getCurrentUserAddress()
       const isWhitelisted = await whitelistContract.whitelistedAddresses(
         address
       )
@@ -145,14 +145,18 @@ const Home: NextPage = () => {
           </p>
           <p className={`font-mono`}>{numOfWhitelisted} have already joined</p>
           <div>
-            <button
-              onClick={addAddressToWhitelist}
-              className={`bg-blue-900 py-2 px-4 w-auto text-white rounded-lg`}
-            >
-              {loadingAndError.type === 'loading'
-                ? `Loading...`
-                : `Join the Whitelist`}
-            </button>
+            {trackers.joinedWhitelist ? (
+              <p>Thanks for joining</p>
+            ) : (
+              <button
+                onClick={addAddressToWhitelist}
+                className={`bg-blue-900 py-2 px-4 w-auto text-white rounded-lg`}
+              >
+                {loadingAndError.type === 'loading'
+                  ? `Loading...`
+                  : `Join the Whitelist`}
+              </button>
+            )}
           </div>
         </div>
         <div className={`flex-1`}>

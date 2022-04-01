@@ -1,4 +1,4 @@
-export const WHITELIST_CONTRACT_ADDRESS = `0x3725e244B7F086501132518C4AEA02c5331457cd`
+export const WHITELIST_CONTRACT_ADDRESS = `0x6295B7A450A5118dcC8732998a54CCe7921934d2`
 export const WHITELIST_ABI = [
   {
     inputs: [
@@ -16,6 +16,19 @@ export const WHITELIST_ABI = [
     name: 'addAddressToWhitelist',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getCurrentUserAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
