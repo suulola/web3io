@@ -5,7 +5,8 @@ contract Whitelist {
     uint8 public maxWhitelistedAddresses;
 
     mapping(address => bool) public whitelistedAddresses;
-    uint8 public numOfWhitelistedAddresses;
+    uint8 public numAddressesWhitelisted;
+    address[] public allAddresses;
 
     constructor(uint8 _maxWhitelistedAddresses) {
         maxWhitelistedAddresses = _maxWhitelistedAddresses;
@@ -17,14 +18,19 @@ contract Whitelist {
             "Sender already whitelisted"
         );
         require(
-            numOfWhitelistedAddresses <= maxWhitelistedAddresses,
+            numAddressesWhitelisted <= maxWhitelistedAddresses,
             "Limit reached. More addresses cannot be whitelisted"
         );
         whitelistedAddresses[msg.sender] = true;
-        numOfWhitelistedAddresses += 1;
+        allAddresses.push(msg.sender);
+        numAddressesWhitelisted += 1;
     }
 
     function getCurrentUserAddress() public view returns (address) {
         return msg.sender;
+    }
+
+    function getAllAddresses() public returns (uint256[] memory) {
+        return allAddresses;
     }
 }

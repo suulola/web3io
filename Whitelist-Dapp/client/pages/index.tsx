@@ -54,11 +54,12 @@ const Home: NextPage = () => {
       setLoadingAndError(prev => ({ ...prev, type: 'loading' }))
       const update = await whitelistContract.addAddressToWhitelist()
       await update.wait()
-      await getNumberOfWhitelisted()
-      setLoadingAndError(prev => ({ value: '', type: 'error' }))
       setTrackers(prev => ({ ...prev, joinedWhitelist: true }))
     } catch (error) {
       console.log({ error }, 3)
+    } finally {
+      await checkIfAddressIsWhitelisted()
+      setLoadingAndError(prev => ({ value: '', type: 'error' }))
     }
   }
 
@@ -70,10 +71,24 @@ const Home: NextPage = () => {
         WHITELIST_ABI,
         provider
       )
-      const _numOfWhitelisted = await whitelistContract.numOfWhitelistedAddresses()
+      const _numOfWhitelisted = await whitelistContract.numAddressesWhitelisted()
       setNumOfWhitelisted(_numOfWhitelisted)
     } catch (error) {
       console.log({ error }, 4)
+    }
+  }
+
+  const getAddress = async (
+    whitelistContract: Contract
+  ): Promise<string | null> => {
+    try {
+      const address = await whitelistContract.allAddresses(0)
+      return address
+    } catch (error) {
+      console.log({ error })
+      const address = await whitelistContract.getCurrentUserAddress()
+      if (address) return address
+      return null
     }
   }
 
@@ -85,8 +100,10 @@ const Home: NextPage = () => {
         WHITELIST_ABI,
         provider
       )
-      console.log({ whitelistContract })
-      const address = await whitelistContract.getCurrentUserAddress()
+
+      const address = await getAddress(whitelistContract)
+      console.log({ address })
+      if (address === null) return false
       const isWhitelisted = await whitelistContract.whitelistedAddresses(
         address
       )
