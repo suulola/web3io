@@ -1,14 +1,52 @@
-# Basic Sample Hardhat Project
+# Whitelist project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Whitelist is a project that allows.
 
-Try running some of the following tasks:
+## Installation
 
-```shell
-npx hardhat compile
-npx hardhat run scripts/deploy.js --network rinkeby
+Use the node package manager [nodejs](https://nodejs.org/en/) to install the dependencies.
+
+### For client section
+
+```bash
+cd client
+yarn OR npm install
+yarn dev
 ```
 
-<!-- 0xaF9e38D9d26EA72Af6044BF6AfAC3a2faf879805 -->
-<!-- 0xD9839398C71d52C80b85DC675BDd2B1b1Af09669 -->
-<!-- 0x3725e244B7F086501132518C4AEA02c5331457cd -->
+### To deploy the existing smart contract
+
+```bash
+cd ./
+yarn OR npm install
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network rinkeby
+
+```
+
+
+#### Set your environmental variables in .env
+
+```shell
+ALCHEMY_API_KEY_URL=xxxxxx
+RINKEBY_PRIVATE_KEY=xxxxx
+```
+
+
+## To deploy to vercel
+```shell
+vercel login
+vercel
+# follow the prompt
+```
+
+
++ Hosted on [vercel](https://whitelist-dapp-three-sepia.vercel.app/)
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
